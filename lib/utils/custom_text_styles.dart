@@ -109,6 +109,24 @@ class CustomTextStyles {
     );
   }
 
+  static TextStyle f20W400({Color? color}) {
+    return TextStyle(
+      color: color,
+      fontFamily: "Roboto",
+      fontSize: 20,
+      fontWeight: FontWeight.w400,
+    );
+  }
+
+  static TextStyle f20W600({Color? color}) {
+    return TextStyle(
+      color: color,
+      fontFamily: "Roboto",
+      fontSize: 20,
+      fontWeight: FontWeight.w600,
+    );
+  }
+
   static TextStyle f24W600({Color? color}) {
     return TextStyle(
       color: color,

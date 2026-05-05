@@ -24,8 +24,7 @@ class OtpScreen extends StatelessWidget {
           },
           child: Icon(Icons.arrow_back, color: AppColors.textColor, size: 25),
         ),
-        title: Padding(
-          padding: const EdgeInsets.only(left: 85),
+        title: Center(
           child: Text(
             "OTP",
             style: CustomTextStyles.f16W600(color: AppColors.textColor),
