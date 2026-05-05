@@ -7,6 +7,7 @@ import 'package:restaurant_bill/utils/colors.dart';
 import 'package:restaurant_bill/utils/custom_text_styles.dart';
 import 'package:restaurant_bill/utils/image_path.dart';
 import 'package:restaurant_bill/utils/validator.dart';
+import 'package:restaurant_bill/views/auth/register_screen.dart';
 import 'package:restaurant_bill/widgets/custom/custom_password_textfield.dart';
 import 'package:restaurant_bill/widgets/custom/custom_textfield.dart';
 import 'package:restaurant_bill/widgets/custom/elevated_button.dart';
@@ -123,10 +124,15 @@ class LoginScreen extends StatelessWidget {
                     ),
                   ),
 
-                  Text(
-                    "Sign Up",
-                    style: CustomTextStyles.f16W600(
-                      color: AppColors.primaryColor,
+                  InkWell(
+                    onTap: () {
+                      Get.offAll(() => RegisterScreen());
+                    },
+                    child: Text(
+                      "Sign Up",
+                      style: CustomTextStyles.f16W600(
+                        color: AppColors.primaryColor,
+                      ),
                     ),
                   ),
                 ],
