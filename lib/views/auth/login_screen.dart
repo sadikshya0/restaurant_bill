@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:restaurant_bill/controller/auth/login_screen_controller.dart';
 import 'package:restaurant_bill/utils/colors.dart';
 import 'package:restaurant_bill/utils/custom_text_styles.dart';

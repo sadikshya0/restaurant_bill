@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:restaurant_bill/utils/colors.dart';
 import 'package:restaurant_bill/utils/custom_text_styles.dart';
 import 'package:restaurant_bill/utils/image_path.dart';
+import 'package:restaurant_bill/views/dashboard/dash_screen.dart';
 import 'package:restaurant_bill/views/dashboard/home_screen.dart';
 import 'package:restaurant_bill/widgets/custom/elevated_button.dart';
 
@@ -43,7 +44,7 @@ class SuccessfulLoginScreen extends StatelessWidget {
               CustomElevatedButton(
                 title: "Home",
                 onTap: () {
-                  Get.offAll(() => HomeScreen());
+                  Get.offAll(() => DashScreen());
                 },
               ),
             ],

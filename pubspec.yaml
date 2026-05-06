@@ -37,6 +37,7 @@ dependencies:
   get: ^4.7.3
   flutter_svg: ^2.2.3
   pinput: ^6.0.2
+  fl_chart: ^1.2.0
 
 dev_dependencies:
   flutter_test:
