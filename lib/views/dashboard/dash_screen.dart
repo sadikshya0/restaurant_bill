@@ -83,7 +83,7 @@ class DashScreen extends StatelessWidget {
             ),
 
             Positioned(
-              top: -13,
+              top: -20,
               left: 0,
               right: 0,
               child: Center(
@@ -99,8 +99,8 @@ class DashScreen extends StatelessWidget {
                     c.currentIndex.value = 2;
                   },
                   child: Container(
-                    height: 50,
-                    width: 50,
+                    height: 55,
+                    width: 55,
                     decoration: BoxDecoration(
                       color: AppColors.primaryColor,
                       shape: BoxShape.circle,
@@ -115,8 +115,8 @@ class DashScreen extends StatelessWidget {
                     child: Center(
                       child: SvgPicture.asset(
                         ImagePath.scanner,
-                        height: 26,
-                        width: 26,
+                        height: 42,
+                        width: 42,
                       ),
                     ),
                   ),
@@ -153,8 +153,8 @@ class CustomBottomBar extends StatelessWidget {
           children: [
             AnimatedContainer(
               duration: const Duration(milliseconds: 250),
-              height: isActive ? 26 : 24,
-              width: isActive ? 26 : 24,
+              height: isActive ? 42 : 40,
+              width: isActive ? 42 : 40,
               child: SvgPicture.asset(
                 svgPath,
                 color: isActive

@@ -15,6 +15,11 @@ class ImagePath {
   static const String graph = "$baseIconPath/graph.svg";
   static const String vector = "$baseIconPath/vector.svg";
   static const String vector1 = "$baseIconPath/vector1.svg";
+  static const String target = "$baseIconPath/target.svg";
+  static const String tick = "$baseIconPath/tick.svg";
+  static const String dollar = "$baseIconPath/dollar.svg";
+  static const String cafe = "$baseIconPath/cafe.svg";
+  static const String burger = "$baseIconPath/burger.svg";
 
   static const String wave = "$baseImagePath/wave.png";
   static const String pizza = "$baseImagePath/pizza.png";

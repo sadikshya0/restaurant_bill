@@ -6,6 +6,7 @@ import 'package:restaurant_bill/controller/dashboard/home_screen_controller.dart
 import 'package:restaurant_bill/utils/colors.dart';
 import 'package:restaurant_bill/utils/custom_text_styles.dart';
 import 'package:restaurant_bill/utils/image_path.dart';
+import 'package:restaurant_bill/views/dashboard/billing_screen.dart';
 import 'package:restaurant_bill/widgets/home_widgets/recent_billing_widget.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -48,12 +49,12 @@ class HomeScreen extends StatelessWidget {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: AppColors.primaryColor,
-              border: Border.all(color: AppColors.lGrey, width: 2),
+              border: Border.all(color: AppColors.lGrey, width: 1),
             ),
             child: SvgPicture.asset(ImagePath.notification),
           ),
 
-          SizedBox(width: 16),
+          SizedBox(width: 12),
 
           Container(
             height: 40,
@@ -61,7 +62,7 @@ class HomeScreen extends StatelessWidget {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: AppColors.secondaryColor.withOpacity(0.5),
-              border: Border.all(color: AppColors.lGrey, width: 3),
+              border: Border.all(color: AppColors.lGrey, width: 2),
             ),
             child: Center(
               child: Text(
@@ -70,6 +71,7 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
           ),
+          SizedBox(width: 16),
         ],
       ),
       body: SafeArea(
@@ -91,8 +93,8 @@ class HomeScreen extends StatelessWidget {
                           boxShadow: [
                             BoxShadow(
                               color: AppColors.lGrey,
-                              blurRadius: 2,
-                              spreadRadius: 1.5,
+                              blurRadius: 6,
+                              spreadRadius: 3,
                               offset: const Offset(0, 3),
                             ),
                           ],
@@ -128,8 +130,8 @@ class HomeScreen extends StatelessWidget {
                           boxShadow: [
                             BoxShadow(
                               color: AppColors.lGrey,
-                              blurRadius: 2,
-                              spreadRadius: 1.5,
+                              blurRadius: 6,
+                              spreadRadius: 3,
                               offset: const Offset(0, 3),
                             ),
                           ],
@@ -157,39 +159,42 @@ class HomeScreen extends StatelessWidget {
                   ],
                 ),
 
-                SizedBox(height: 16),
+                SizedBox(height: 20),
                 Container(
-                  width: 351,
+                  width: double.infinity,
                   decoration: BoxDecoration(
                     color: AppColors.whiteColor,
                     borderRadius: BorderRadius.circular(10),
                     boxShadow: [
                       BoxShadow(
                         color: AppColors.lGrey,
-                        blurRadius: 2,
-                        spreadRadius: 1.5,
+                        blurRadius: 6,
+                        spreadRadius: 3,
                         offset: const Offset(0, 3),
                       ),
                     ],
                   ),
                   child: Column(
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          SvgPicture.asset(
-                            ImagePath.graph,
-                            height: 30,
-                            width: 30,
-                            fit: BoxFit.scaleDown,
-                          ),
-                          Text(
-                            "Recent Spending",
-                            style: CustomTextStyles.f12W600(
-                              color: AppColors.textColor,
+                      Padding(
+                        padding: const EdgeInsets.all(12),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            SvgPicture.asset(
+                              ImagePath.graph,
+                              height: 30,
+                              width: 30,
+                              fit: BoxFit.scaleDown,
                             ),
-                          ),
-                        ],
+                            Text(
+                              "Recent Spending",
+                              style: CustomTextStyles.f14W600(
+                                color: AppColors.textColor,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
 
                       SizedBox(
@@ -279,30 +284,30 @@ class HomeScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                SizedBox(height: 16),
+                SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       "Recent Bills",
-                      style: CustomTextStyles.f12W600(
+                      style: CustomTextStyles.f16W600(
                         color: AppColors.textColor,
                       ),
                     ),
                     InkWell(
                       onTap: () {
-                        // Navigate to all bills screen
+                        Get.offAll(() => BillingScreen());
                       },
                       child: Text(
                         "View All",
-                        style: CustomTextStyles.f12W600(
+                        style: CustomTextStyles.f16W600(
                           color: AppColors.primaryColor,
                         ),
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 8),
+                SizedBox(height: 10),
                 RecentBillsWidget(
                   title: "001",
                   dateTime: "March 4, 2020, 9:45",
@@ -311,9 +316,24 @@ class HomeScreen extends StatelessWidget {
                   status: "VERIFIED",
                 ),
                 RecentBillsWidget(
-                  title: "001",
-                  dateTime: "March 4, 2020, 9:45",
+                  title: "005",
+                  dateTime: "May 4, 2020, 9:45",
                   price: "124.53",
+                  colors: AppColors.primaryColor,
+                  status: "COMPLETED",
+                ),
+
+                RecentBillsWidget(
+                  title: "001",
+                  dateTime: "July 14, 2020, 8:45",
+                  price: "300",
+                  colors: AppColors.green,
+                  status: "VERIFIED",
+                ),
+                RecentBillsWidget(
+                  title: "001",
+                  dateTime: "Feb 20, 2020, 1:10",
+                  price: "500",
                   colors: AppColors.primaryColor,
                   status: "COMPLETED",
                 ),

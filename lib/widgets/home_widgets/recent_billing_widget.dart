@@ -30,8 +30,8 @@ class RecentBillsWidget extends StatelessWidget {
         boxShadow: [
           BoxShadow(
             color: AppColors.lGrey,
-            blurRadius: 2,
-            spreadRadius: 1.5,
+            blurRadius: 6,
+            spreadRadius: 3,
             offset: const Offset(0, 3),
           ),
         ],
