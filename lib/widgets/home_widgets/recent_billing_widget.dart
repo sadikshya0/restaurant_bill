@@ -104,7 +104,7 @@ class RecentBillsWidget extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SvgPicture.asset(ImagePath.vector),
+                    SvgPicture.asset(ImagePath.heart),
                   ],
                 ),
               ],

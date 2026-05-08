@@ -13,8 +13,6 @@ class ImagePath {
   static const String points = "$baseIconPath/points.svg";
   static const String stats = "$baseIconPath/stats.svg";
   static const String graph = "$baseIconPath/graph.svg";
-  static const String vector = "$baseIconPath/vector.svg";
-  static const String vector1 = "$baseIconPath/vector1.svg";
   static const String target = "$baseIconPath/target.svg";
   static const String tick = "$baseIconPath/tick.svg";
   static const String dollar = "$baseIconPath/dollar.svg";
@@ -22,6 +20,10 @@ class ImagePath {
   static const String payment = "$baseIconPath/payment.svg";
   static const String voucher = "$baseIconPath/voucher.svg";
   static const String desert = "$baseIconPath/desert.svg";
+  static const String about = "$baseIconPath/about.svg";
+  static const String privacy = "$baseIconPath/privacy.svg";
+  static const String help = "$baseIconPath/help.svg";
+  static const String heart = "$baseIconPath/heart.svg";
 
   static const String wave = "$baseImagePath/wave.png";
   static const String pizza = "$baseImagePath/pizza.png";
@@ -33,5 +35,5 @@ class ImagePath {
   static const String food = "$baseImagePath/food.png";
 
   static const String logo = "$baseImagePath/infinity-logo.png";
-  static const String profile = "$baseImagePath/profile.jpg";
+  static const String profile = "$baseImagePath/profile.png";
 }

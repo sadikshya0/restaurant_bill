@@ -7,6 +7,7 @@ import 'package:restaurant_bill/utils/colors.dart';
 import 'package:restaurant_bill/utils/custom_text_styles.dart';
 import 'package:restaurant_bill/utils/image_path.dart';
 import 'package:restaurant_bill/views/dashboard/billing_screen.dart';
+import 'package:restaurant_bill/views/dashboard/profile_screen.dart';
 import 'package:restaurant_bill/widgets/home_widgets/recent_billing_widget.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -56,18 +57,25 @@ class HomeScreen extends StatelessWidget {
 
           SizedBox(width: 12),
 
-          Container(
-            height: 40,
-            width: 40,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: AppColors.secondaryColor.withOpacity(0.5),
-              border: Border.all(color: AppColors.lGrey, width: 2),
-            ),
-            child: Center(
-              child: Text(
-                "JD",
-                style: CustomTextStyles.f12W600(color: AppColors.primaryColor),
+          InkWell(
+            onTap: () {
+              Get.offAll(() => ProfileScreen());
+            },
+            child: Container(
+              height: 40,
+              width: 40,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: AppColors.secondaryColor.withOpacity(0.5),
+                border: Border.all(color: AppColors.lGrey, width: 2),
+              ),
+              child: Center(
+                child: Text(
+                  "JD",
+                  style: CustomTextStyles.f12W600(
+                    color: AppColors.primaryColor,
+                  ),
+                ),
               ),
             ),
           ),
