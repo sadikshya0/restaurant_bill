@@ -5,7 +5,6 @@ import 'package:restaurant_bill/utils/colors.dart';
 import 'package:restaurant_bill/utils/custom_text_styles.dart';
 import 'package:restaurant_bill/utils/image_path.dart';
 import 'package:restaurant_bill/views/auth/login_screen.dart';
-import 'package:restaurant_bill/views/auth/register_screen.dart';
 import 'package:restaurant_bill/views/dashboard/about_screen.dart';
 import 'package:restaurant_bill/views/dashboard/edit_profile_screen.dart';
 import 'package:restaurant_bill/views/dashboard/favourite_screen.dart';
