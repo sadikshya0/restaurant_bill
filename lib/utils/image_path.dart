@@ -24,6 +24,10 @@ class ImagePath {
   static const String privacy = "$baseIconPath/privacy.svg";
   static const String help = "$baseIconPath/help.svg";
   static const String heart = "$baseIconPath/heart.svg";
+  static const String pay = "$baseIconPath/pay.svg";
+  static const String feature = "$baseIconPath/feature.svg";
+  static const String scan = "$baseIconPath/scan.svg";
+  static const String account = "$baseIconPath/account.svg";
 
   static const String wave = "$baseImagePath/wave.png";
   static const String pizza = "$baseImagePath/pizza.png";
