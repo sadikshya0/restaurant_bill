@@ -95,28 +95,28 @@ class CustomTextField extends StatelessWidget {
               )
             : null,
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(5),
+          borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(
             width: 1,
             color: border ?? AppColors.backGroundDark.withOpacity(0.4),
           ),
         ),
         focusedErrorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(5),
+          borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(
             width: 1,
             color: border ?? AppColors.errorColor,
           ),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(5),
+          borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(
             width: 1,
             color: border ?? AppColors.primaryColor,
           ),
         ),
         errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(5),
+          borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(
             width: 1,
             color: border ?? AppColors.errorColor,

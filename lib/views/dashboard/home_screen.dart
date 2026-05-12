@@ -7,6 +7,7 @@ import 'package:restaurant_bill/utils/colors.dart';
 import 'package:restaurant_bill/utils/custom_text_styles.dart';
 import 'package:restaurant_bill/utils/image_path.dart';
 import 'package:restaurant_bill/views/dashboard/billing_screen.dart';
+import 'package:restaurant_bill/views/dashboard/notification_screen.dart';
 import 'package:restaurant_bill/views/dashboard/profile_screen.dart';
 import 'package:restaurant_bill/widgets/home_widgets/recent_billing_widget.dart';
 
@@ -44,15 +45,20 @@ class HomeScreen extends StatelessWidget {
           ],
         ),
         actions: [
-          Container(
-            height: 30,
-            width: 30,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: AppColors.primaryColor,
-              border: Border.all(color: AppColors.lGrey, width: 1),
+          InkWell(
+            onTap: () {
+              Get.offAll(() => NotificationScreen());
+            },
+            child: Container(
+              height: 30,
+              width: 30,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: AppColors.primaryColor,
+                border: Border.all(color: AppColors.lGrey, width: 1),
+              ),
+              child: SvgPicture.asset(ImagePath.notification),
             ),
-            child: SvgPicture.asset(ImagePath.notification),
           ),
 
           SizedBox(width: 12),

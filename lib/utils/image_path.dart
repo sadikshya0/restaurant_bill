@@ -31,6 +31,10 @@ class ImagePath {
   static const String people = "$baseIconPath/people.svg";
   static const String clock = "$baseIconPath/clock.svg";
   static const String cloud = "$baseIconPath/cloud.svg";
+  static const String stars = "$baseIconPath/star.svg";
+  static const String gift = "$baseIconPath/gift.svg";
+  static const String reminder = "$baseIconPath/reminder.svg";
+  static const String money = "$baseIconPath/money.svg";
 
   static const String wave = "$baseImagePath/wave.png";
   static const String pizza = "$baseImagePath/pizza.png";
