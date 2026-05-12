@@ -44,6 +44,7 @@ class ImagePath {
   static const String bill = "$baseImagePath/bill.png";
   static const String cafe = "$baseImagePath/cafe.png";
   static const String food = "$baseImagePath/food.png";
+  static const String bil = "$baseImagePath/bills.png";
 
   static const String logo = "$baseImagePath/infinity-logo.png";
   static const String profile = "$baseImagePath/profile.png";

@@ -10,7 +10,6 @@ import 'package:restaurant_bill/views/dashboard/dash_screen.dart';
 import 'package:restaurant_bill/views/dashboard/edit_profile_screen.dart';
 import 'package:restaurant_bill/views/dashboard/favourite_screen.dart';
 import 'package:restaurant_bill/views/dashboard/help_screen.dart';
-import 'package:restaurant_bill/views/dashboard/home_screen.dart';
 import 'package:restaurant_bill/views/dashboard/privacy_screen.dart';
 import 'package:restaurant_bill/widgets/profile_widgets/profile_menu_tile.dart';
 
