@@ -308,15 +308,10 @@ class HomeScreen extends StatelessWidget {
                         color: AppColors.textColor,
                       ),
                     ),
-                    InkWell(
-                      onTap: () {
-                        Get.offAll(() => BillingScreen());
-                      },
-                      child: Text(
-                        "View All",
-                        style: CustomTextStyles.f16W600(
-                          color: AppColors.primaryColor,
-                        ),
+                    Text(
+                      "View All",
+                      style: CustomTextStyles.f16W600(
+                        color: AppColors.primaryColor,
                       ),
                     ),
                   ],

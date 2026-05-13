@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:restaurant_bill/controller/dashboard/qr_screen_controller.dart';
 import 'package:restaurant_bill/utils/colors.dart';
 import 'package:restaurant_bill/utils/custom_text_styles.dart';
 import 'package:restaurant_bill/utils/image_path.dart';
+import 'package:restaurant_bill/views/dashboard/scan_screen.dart';
 
 class QrScreen extends StatelessWidget {
-  const QrScreen({super.key});
+  final QrScreenController controller = Get.put(QrScreenController());
+  QrScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -50,10 +54,13 @@ class QrScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Text(
-                        "Upload Receipt",
-                        style: CustomTextStyles.f14W600(
-                          color: AppColors.secondaryTextColor,
+                      GestureDetector(
+                        onTap: controller.pickFromGallery,
+                        child: Text(
+                          "Upload Receipt",
+                          style: CustomTextStyles.f14W600(
+                            color: AppColors.secondaryTextColor,
+                          ),
                         ),
                       ),
                     ],
@@ -97,10 +104,15 @@ class QrScreen extends StatelessWidget {
                       color: AppColors.whiteColor,
                       size: 24,
                     ),
-                    Text(
-                      "Start Scan",
-                      style: CustomTextStyles.f14W600(
-                        color: AppColors.whiteColor,
+                    InkWell(
+                      onTap: () {
+                        Get.to(() => ScanScreen());
+                      },
+                      child: Text(
+                        "Start Scan",
+                        style: CustomTextStyles.f14W600(
+                          color: AppColors.whiteColor,
+                        ),
                       ),
                     ),
                   ],
