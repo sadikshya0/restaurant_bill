@@ -25,7 +25,7 @@ class RecentBillsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Get.offAll(() => BillViewScreen());
+        Get.to(() => BillViewScreen());
       },
       child: Container(
         margin: EdgeInsets.only(bottom: 10),

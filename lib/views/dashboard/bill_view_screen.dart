@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:restaurant_bill/utils/colors.dart';
 import 'package:restaurant_bill/utils/custom_text_styles.dart';
 import 'package:restaurant_bill/utils/image_path.dart';
-import 'package:restaurant_bill/views/dashboard/dash_screen.dart';
 
 class BillViewScreen extends StatelessWidget {
   const BillViewScreen({super.key});
@@ -14,7 +13,7 @@ class BillViewScreen extends StatelessWidget {
       appBar: AppBar(
         leading: InkWell(
           onTap: () {
-            Get.offAll(() => DashScreen());
+            Get.back();
           },
           child: Icon(Icons.arrow_back, color: AppColors.textColor, size: 25),
         ),
