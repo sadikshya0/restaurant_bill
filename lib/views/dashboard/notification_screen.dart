@@ -50,83 +50,87 @@ class NotificationScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 10),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
-                      height: 35,
-                      width: 75,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(25),
-                        color: AppColors.primaryColor.withOpacity(0.3),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "All ",
-                            style: CustomTextStyles.f12W400(
-                              color: AppColors.primaryColor,
-                            ),
+                    Row(
+                      children: [
+                        Container(
+                          height: 35,
+                          width: 75,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25),
+                            color: AppColors.primaryColor.withOpacity(0.3),
                           ),
-                          Container(
-                            height: 20,
-                            width: 45,
-                            decoration: BoxDecoration(
-                              color: AppColors.primaryColor,
-                              borderRadius: BorderRadius.circular(25),
-                            ),
-                            child: Center(
-                              child: Obx(
-                                () => Text(
-                                  controller.unreadCount.value.toString(),
-                                  style: CustomTextStyles.f10W400(
-                                    color: AppColors.whiteColor,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "All ",
+                                style: CustomTextStyles.f12W400(
+                                  color: AppColors.primaryColor,
+                                ),
+                              ),
+                              Container(
+                                height: 20,
+                                width: 45,
+                                decoration: BoxDecoration(
+                                  color: AppColors.primaryColor,
+                                  borderRadius: BorderRadius.circular(25),
+                                ),
+                                child: Center(
+                                  child: Obx(
+                                    () => Text(
+                                      controller.unreadCount.value.toString(),
+                                      style: CustomTextStyles.f10W400(
+                                        color: AppColors.whiteColor,
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
+                            ],
                           ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(width: 8),
-                    Container(
-                      height: 35,
-                      width: 100,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(25),
-                        color: AppColors.primaryColor.withOpacity(0.3),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Unread ",
-                            style: CustomTextStyles.f12W400(
-                              color: AppColors.primaryColor,
-                            ),
+                        ),
+                        SizedBox(width: 8),
+                        Container(
+                          height: 35,
+                          width: 100,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25),
+                            color: AppColors.primaryColor.withOpacity(0.3),
                           ),
-                          Container(
-                            height: 20,
-                            width: 45,
-                            decoration: BoxDecoration(
-                              color: AppColors.primaryColor,
-                              borderRadius: BorderRadius.circular(25),
-                            ),
-                            child: Center(
-                              child: Obx(
-                                () => Text(
-                                  controller.unreadCount.value.toString(),
-                                  style: CustomTextStyles.f10W400(
-                                    color: AppColors.whiteColor,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Unread ",
+                                style: CustomTextStyles.f12W400(
+                                  color: AppColors.primaryColor,
+                                ),
+                              ),
+                              Container(
+                                height: 20,
+                                width: 45,
+                                decoration: BoxDecoration(
+                                  color: AppColors.primaryColor,
+                                  borderRadius: BorderRadius.circular(25),
+                                ),
+                                child: Center(
+                                  child: Obx(
+                                    () => Text(
+                                      controller.unreadCount.value.toString(),
+                                      style: CustomTextStyles.f10W400(
+                                        color: AppColors.whiteColor,
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
+                            ],
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                    SizedBox(width: 80),
                     InkWell(
                       onTap: () {
                         controller.markAllAsRead();

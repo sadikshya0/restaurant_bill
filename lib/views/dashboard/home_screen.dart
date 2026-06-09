@@ -2,11 +2,12 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:restaurant_bill/controller/core_controller.dart';
+import 'package:restaurant_bill/controller/dashboard/billing_screen_controller.dart';
 import 'package:restaurant_bill/controller/dashboard/home_screen_controller.dart';
 import 'package:restaurant_bill/utils/colors.dart';
 import 'package:restaurant_bill/utils/custom_text_styles.dart';
 import 'package:restaurant_bill/utils/image_path.dart';
-import 'package:restaurant_bill/views/dashboard/billing_screen.dart';
 import 'package:restaurant_bill/views/dashboard/notification_screen.dart';
 import 'package:restaurant_bill/views/dashboard/profile_screen.dart';
 import 'package:restaurant_bill/widgets/home_widgets/recent_billing_widget.dart';
@@ -14,6 +15,10 @@ import 'package:restaurant_bill/widgets/home_widgets/recent_billing_widget.dart'
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
   final c = Get.put(HomeScreenController());
+  final coreController = Get.put(CoreController());
+
+  final controller = Get.put(BillingScreenController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -160,10 +165,12 @@ class HomeScreen extends StatelessWidget {
                               ),
                             ),
                             SizedBox(height: 5),
-                            Text(
-                              "160 pts",
-                              style: CustomTextStyles.f18W600(
-                                color: AppColors.whiteColor,
+                            Obx(
+                              () => Text(
+                                "${coreController.currentUser.value?.loyaltyPoints} pts",
+                                style: CustomTextStyles.f18W600(
+                                  color: AppColors.whiteColor,
+                                ),
                               ),
                             ),
                           ],
@@ -317,35 +324,28 @@ class HomeScreen extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: 10),
-                RecentBillsWidget(
-                  title: "001",
-                  dateTime: "March 4, 2020, 9:45",
-                  price: "124.53",
-                  colors: AppColors.green,
-                  status: "VERIFIED",
-                ),
-                RecentBillsWidget(
-                  title: "005",
-                  dateTime: "May 4, 2020, 9:45",
-                  price: "124.53",
-                  colors: AppColors.primaryColor,
-                  status: "COMPLETED",
-                ),
+                Obx(() {
+                  if (controller.isLoading.value) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
 
-                RecentBillsWidget(
-                  title: "001",
-                  dateTime: "July 14, 2020, 8:45",
-                  price: "300",
-                  colors: AppColors.green,
-                  status: "VERIFIED",
-                ),
-                RecentBillsWidget(
-                  title: "001",
-                  dateTime: "Feb 20, 2020, 1:10",
-                  price: "500",
-                  colors: AppColors.primaryColor,
-                  status: "COMPLETED",
-                ),
+                  if (controller.bills.isEmpty) {
+                    return Text(
+                      "No Bills",
+                      style: CustomTextStyles.f14W400(color: AppColors.lGrey),
+                    );
+                  }
+
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: controller.bills.length,
+                    itemBuilder: (context, index) {
+                      final bill = controller.bills[index];
+                      return RecentBillsWidget(bills: bill);
+                    },
+                  );
+                }),
               ],
             ),
           ),

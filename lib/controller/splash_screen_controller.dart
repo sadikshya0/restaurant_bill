@@ -1,14 +1,19 @@
 import 'package:get/get.dart';
+import 'package:restaurant_bill/controller/core_controller.dart';
 import 'package:restaurant_bill/views/auth/login_screen.dart';
+import 'package:restaurant_bill/views/dashboard/dash_screen.dart';
 
 class SplashScreenController extends GetxController {
+  final c = Get.put(CoreController());
   @override
   void onInit() {
     super.onInit();
-    // Simulate a delay for the splash screen (e.g., 3 seconds)
     Future.delayed(const Duration(seconds: 3), () {
-      // Navigate to the next screen (e.g., LoginScreen)
-      Get.offAll(() => LoginScreen());
+      if (c.isUserLoggendIn()) {
+        Get.offAll(() => DashScreen());
+      } else {
+        Get.offAll(() => LoginScreen());
+      }
     });
   }
 }

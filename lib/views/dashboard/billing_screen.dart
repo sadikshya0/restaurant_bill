@@ -64,14 +64,14 @@ class BillingScreen extends StatelessWidget {
                   final index = controller.selectedIndex.value;
 
                   final filtered = controller.bills.where((bill) {
-                    final date = bill["dateTime"] as DateTime;
+                    final date = DateTime.parse(bill.billDate ?? "");
 
                     if (index == 1) {
                       return controller.isToday(date);
                     } else if (index == 2) {
                       return controller.isThisMonth(date);
                     }
-                    return true; // All
+                    return true;
                   }).toList();
 
                   return ListView.builder(
@@ -79,13 +79,7 @@ class BillingScreen extends StatelessWidget {
                     itemBuilder: (context, index) {
                       final bill = filtered[index];
 
-                      return RecentBillsWidget(
-                        title: bill["title"],
-                        dateTime: bill["dateTime"].toString(),
-                        price: bill["price"],
-                        colors: bill["color"],
-                        status: bill["status"],
-                      );
+                      return RecentBillsWidget(bills: bill);
                     },
                   );
                 }),

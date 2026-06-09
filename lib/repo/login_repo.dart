@@ -2,13 +2,14 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:http/http.dart' as http;
+import 'package:restaurant_bill/model/user.dart';
 import 'package:restaurant_bill/utils/api.dart';
 
 class LoginRepo {
   static Future<void> loginRepo({
     required String email,
     required String password,
-    required Function(String successMessage) onSuccess,
+    required Function(Users user, String token, String message) onSuccess,
     required Function(String message) onError,
   }) async {
     try {
@@ -24,7 +25,9 @@ class LoginRepo {
       dynamic data = jsonDecode(response.body);
       log("login : $data");
       if (data["status"] == "success") {
-        onSuccess(data["message"]);
+        String token = json.encode(['token']);
+        Users user = Users.fromJson(data['data']);
+        onSuccess(user, token, data["message"]);
       } else {
         onError(data["message"]);
       }
