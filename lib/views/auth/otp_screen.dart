@@ -12,8 +12,8 @@ import '../../controller/auth/otp_controller.dart';
 
 class OtpScreen extends StatelessWidget {
   final c = Get.put(OtpController());
-  OtpScreen({super.key});
-
+  OtpScreen({super.key, required this.userId});
+  final String userId;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,123 +34,124 @@ class OtpScreen extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16),
-          child: Center(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  height: 62,
-                  width: 62,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.rectangle,
-                    borderRadius: BorderRadius.circular(25),
-                    color: AppColors.primaryColor,
-                  ),
-                  child: Center(child: Image.asset(ImagePath.pizza)),
-                ),
-                SizedBox(height: 30),
-                Text(
-                  "Verify with OTP",
-                  style: CustomTextStyles.f16W600(color: AppColors.textColor),
-                ),
-                SizedBox(height: 10),
-                Text(
-                  "Enter 4-digit OTP sent to +977-98XXXXXXX",
-                  style: CustomTextStyles.f16W400(
-                    color: AppColors.secondaryTextColor,
-                  ),
-                ),
-                SizedBox(height: 30),
-
-                Pinput(
-                  length: 4,
-                  defaultPinTheme: PinTheme(
-                    width: 50,
-                    height: 60,
-                    textStyle: CustomTextStyles.f14W400(
-                      color: AppColors.textColor,
-                    ),
+          child: SingleChildScrollView(
+            child: Center(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    height: 62,
+                    width: 62,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: AppColors.secondaryTextColor),
+                      shape: BoxShape.rectangle,
+                      borderRadius: BorderRadius.circular(25),
+                      color: AppColors.primaryColor,
+                    ),
+                    child: Center(child: Image.asset(ImagePath.pizza)),
+                  ),
+                  SizedBox(height: 30),
+                  Text(
+                    "Verify with OTP",
+                    style: CustomTextStyles.f16W600(color: AppColors.textColor),
+                  ),
+                  SizedBox(height: 10),
+                  Text(
+                    "Enter 4-digit OTP sent to +977-98XXXXXXX",
+                    style: CustomTextStyles.f16W400(
+                      color: AppColors.secondaryTextColor,
                     ),
                   ),
-                  focusedPinTheme: PinTheme(
-                    width: 50,
-                    height: 60,
+                  SizedBox(height: 30),
 
-                    textStyle: CustomTextStyles.f14W400(
-                      color: AppColors.textColor,
-                    ),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: AppColors.primaryColor),
-                    ),
-                  ),
-                ),
-
-                SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Didn't receive the OTP?",
-                      style: CustomTextStyles.f12W600(
+                  Pinput(
+                    length: 6,
+                    controller: c.pinController,
+                    defaultPinTheme: PinTheme(
+                      width: 45,
+                      height: 45,
+                      textStyle: CustomTextStyles.f14W400(
                         color: AppColors.textColor,
                       ),
-                    ),
-                    SizedBox(height: 30),
-                    InkWell(
-                      onTap: () {
-                        // Resend OTP logic here
-                      },
-                      child: Text(
-                        "Resend in 00:30",
-                        style: CustomTextStyles.f12W600(
-                          color: AppColors.primaryColor,
-                        ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(color: AppColors.secondaryTextColor),
                       ),
                     ),
-                  ],
-                ),
-                SizedBox(height: 30),
-                Divider(
-                  height: 40,
-                  thickness: 1,
-                  color: AppColors.secondaryTextColor.withOpacity(0.5),
-                ),
-                SizedBox(height: 30),
-                CustomElevatedButton(
-                  title: "Verify & Login",
-                  onTap: () {
-                    Get.offAll(() => SuccessfulLoginScreen());
-                  },
-                ),
-                SizedBox(height: 20),
-                CustomElevatedButton(title: "cancel", onTap: () {}),
-                SizedBox(height: 30),
+                    focusedPinTheme: PinTheme(
+                      width: 50,
+                      height: 60,
 
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Having difficult with OTP?",
-                      style: CustomTextStyles.f12W600(
+                      textStyle: CustomTextStyles.f14W400(
                         color: AppColors.textColor,
                       ),
-                    ),
-                    InkWell(
-                      onTap: () {},
-                      child: Text(
-                        "Get Help",
-                        style: CustomTextStyles.f12W600(
-                          color: AppColors.primaryColor,
-                        ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(color: AppColors.primaryColor),
                       ),
                     ),
-                  ],
-                ),
-              ],
+                  ),
+
+                  SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Didn't receive the OTP?",
+                        style: CustomTextStyles.f12W600(
+                          color: AppColors.textColor,
+                        ),
+                      ),
+                      SizedBox(height: 30),
+                      InkWell(
+                        onTap: () {},
+                        child: Text(
+                          "Resend in 00:30",
+                          style: CustomTextStyles.f12W600(
+                            color: AppColors.primaryColor,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 30),
+                  Divider(
+                    height: 40,
+                    thickness: 1,
+                    color: AppColors.secondaryTextColor.withOpacity(0.5),
+                  ),
+                  SizedBox(height: 30),
+                  CustomElevatedButton(
+                    title: "Verify & Login",
+                    onTap: () {
+                      c.onSubmit(userId);
+                    },
+                  ),
+                  SizedBox(height: 20),
+                  CustomElevatedButton(title: "cancel", onTap: () {}),
+                  SizedBox(height: 30),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Having difficult with OTP?",
+                        style: CustomTextStyles.f12W600(
+                          color: AppColors.textColor,
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {},
+                        child: Text(
+                          "Get Help",
+                          style: CustomTextStyles.f12W600(
+                            color: AppColors.primaryColor,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),
