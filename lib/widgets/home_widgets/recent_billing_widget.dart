@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:restaurant_bill/controller/dashboard/favourite_controller.dart';
 import 'package:restaurant_bill/model/bills.dart';
 import 'package:restaurant_bill/utils/colors.dart';
 import 'package:restaurant_bill/utils/custom_text_styles.dart';
@@ -8,9 +8,10 @@ import 'package:restaurant_bill/utils/image_path.dart';
 import 'package:restaurant_bill/views/dashboard/bill_view_screen.dart';
 
 class RecentBillsWidget extends StatelessWidget {
-  const RecentBillsWidget({super.key, required this.bills});
+  RecentBillsWidget({super.key, required this.bills});
 
   final Bills bills;
+  final FavouriteController controller = Get.put(FavouriteController());
 
   Color getStatusColor(String status) {
     switch (status.toLowerCase()) {
@@ -19,7 +20,7 @@ class RecentBillsWidget extends StatelessWidget {
       case "pending":
         return Colors.yellow;
       case "invalid":
-      case "invalied": // handling typo from backend
+      case "invalied":
         return Colors.red;
       default:
         return Colors.grey;
@@ -31,89 +32,106 @@ class RecentBillsWidget extends StatelessWidget {
     final status = bills.verificationStatus ?? "";
     final color = getStatusColor(status);
 
-    return InkWell(
-      onTap: () {
-        Get.to(() => BillViewScreen());
-      },
-      child: Container(
-        margin: const EdgeInsets.only(bottom: 10),
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        decoration: BoxDecoration(
-          color: AppColors.whiteColor,
-          borderRadius: BorderRadius.circular(10),
-          boxShadow: [
-            BoxShadow(
-              color: AppColors.lGrey,
-              blurRadius: 6,
-              spreadRadius: 3,
-              offset: const Offset(0, 3),
-            ),
-          ],
-        ),
-        child: Row(
-          children: [
-            Image.asset(
+    return Container(
+      margin: const EdgeInsets.only(bottom: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      decoration: BoxDecoration(
+        color: AppColors.whiteColor,
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.lGrey,
+            blurRadius: 6,
+            spreadRadius: 3,
+            offset: const Offset(0, 3),
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          InkWell(
+            onTap: () {
+              Get.to(() => BillViewScreen());
+            },
+            child: Image.asset(
               ImagePath.bill,
               height: 60,
               width: 60,
               fit: BoxFit.scaleDown,
             ),
-            const SizedBox(width: 16),
+          ),
 
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    bills.billNumber ?? "",
-                    style: CustomTextStyles.f14W600(color: AppColors.textColor),
+          const SizedBox(width: 16),
+
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  bills.billNumber ?? "",
+                  style: CustomTextStyles.f14W600(color: AppColors.textColor),
+                ),
+                const SizedBox(height: 3),
+                Text(
+                  bills.billDate ?? "",
+                  style: CustomTextStyles.f12W400(
+                    color: AppColors.secondaryTextColor,
                   ),
+                ),
+                const SizedBox(height: 6),
 
-                  const SizedBox(height: 3),
-
-                  Text(
-                    bills.billDate ?? "",
-                    style: CustomTextStyles.f12W400(
-                      color: AppColors.secondaryTextColor,
-                    ),
-                  ),
-
-                  const SizedBox(height: 6),
-
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 8,
-                          vertical: 3,
-                        ),
-                        decoration: BoxDecoration(
-                          color: color.withOpacity(0.15),
-                          borderRadius: BorderRadius.circular(15),
-                          boxShadow: [
-                            BoxShadow(
-                              color: AppColors.lGrey.withOpacity(0.4),
-                              blurRadius: 2,
-                              spreadRadius: 1.5,
-                              offset: const Offset(0, 3),
-                            ),
-                          ],
-                        ),
-                        child: Text(
-                          status.isEmpty ? "unknown" : status,
-                          style: CustomTextStyles.f12W600(color: color),
-                        ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 3,
                       ),
+                      decoration: BoxDecoration(
+                        color: color.withOpacity(0.15),
+                        borderRadius: BorderRadius.circular(15),
+                        boxShadow: [
+                          BoxShadow(
+                            color: AppColors.lGrey.withOpacity(0.4),
+                            blurRadius: 2,
+                            spreadRadius: 1.5,
+                            offset: const Offset(0, 3),
+                          ),
+                        ],
+                      ),
+                      child: Text(
+                        status.isEmpty ? "unknown" : status,
+                        style: CustomTextStyles.f12W600(color: color),
+                      ),
+                    ),
 
-                      SvgPicture.asset(ImagePath.heart),
-                    ],
-                  ),
-                ],
-              ),
+                    Obx(() {
+                      final isFav = controller.isFavorite(
+                        int.parse(bills.id.toString()),
+                      );
+
+                      return InkWell(
+                        onTap: () {
+                          controller.addToWishlist(
+                            int.parse(bills.id.toString()),
+                          );
+                        },
+                        child: Icon(
+                          isFav
+                              ? Icons.favorite
+                              : Icons.favorite_border_outlined,
+                          size: 22,
+                          color: isFav ? Colors.red : AppColors.primaryColor,
+                        ),
+                      );
+                    }),
+                  ],
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

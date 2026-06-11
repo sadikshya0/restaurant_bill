@@ -1,4 +1,4 @@
-package com.example.restaurant_bill
+package com.ableinnovation.restaurantbill
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -5,4 +5,7 @@ class Api {
   static const String registerUrl = "$baseUrl/register_user.php";
   static const String otpUrl = "$baseUrl/verify_otp.php";
   static const String billsUrl = "$baseUrl/get_bills.php";
+  static const String wishlistUrl = "$baseUrl/get_wishlist.php";
+  static const String addWishlistUrl = "$baseUrl/add_wishlist.php";
+  static const String deleteUrl = "$baseUrl/delete_wishlist.php?wishlist_id=1";
 }
