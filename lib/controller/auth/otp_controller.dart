@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:restaurant_bill/repo/otp_repo.dart';
 import 'package:restaurant_bill/utils/custom_snackbar.dart';
 import 'package:restaurant_bill/views/auth/login_screen.dart';
-import 'package:restaurant_bill/views/auth/successful_login_screen.dart';
 import 'package:simple_fontellico_progress_dialog/simple_fontico_loading.dart';
 
 class OtpController extends GetxController {

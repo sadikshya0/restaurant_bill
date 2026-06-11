@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:restaurant_bill/controller/dashboard/favourite_controller.dart';
+import 'package:restaurant_bill/model/bills.dart';
 import 'package:restaurant_bill/utils/colors.dart';
 import 'package:restaurant_bill/utils/custom_text_styles.dart';
 import 'package:restaurant_bill/views/dashboard/profile_screen.dart';
+import 'package:restaurant_bill/widgets/home_widgets/recent_billing_widget.dart';
 
 class FavouriteScreen extends StatelessWidget {
   FavouriteScreen({super.key});
@@ -12,7 +14,10 @@ class FavouriteScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.onBackgroundDark,
       appBar: AppBar(
+        backgroundColor: AppColors.onBackgroundDark,
+
         leading: InkWell(
           onTap: () {
             Get.offAll(() => ProfileScreen());
@@ -26,23 +31,31 @@ class FavouriteScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: Obx(() {
-        if (controller.allWishlist.isEmpty) {
-          return const Center(child: Text("No favourites yet"));
-        }
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Obx(() {
+          if (controller.allWishlist.isEmpty) {
+            return const Center(child: Text("No favourites yet"));
+          }
 
-        return ListView.builder(
-          itemCount: controller.allWishlist.length,
-          itemBuilder: (context, index) {
-            final bill = controller.allWishlist[index];
+          return ListView.builder(
+            itemCount: controller.allWishlist.length,
+            itemBuilder: (context, index) {
+              final w = controller.allWishlist[index];
 
-            return ListTile(
-              title: Text(bill.billNumber ?? ""),
-              subtitle: Text(bill.billDate ?? ""),
-            );
-          },
-        );
-      }),
+              final bill = Bills(
+                id: w.billId,
+                billNumber: w.billNumber,
+                billImage: w.billImage,
+                billDate: w.billDate,
+                verificationStatus: w.verificationStatus,
+                createdAt: w.createdAt,
+              );
+              return RecentBillsWidget(bills: bill);
+            },
+          );
+        }),
+      ),
     );
   }
 }

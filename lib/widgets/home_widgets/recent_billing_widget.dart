@@ -113,8 +113,8 @@ class RecentBillsWidget extends StatelessWidget {
 
                       return InkWell(
                         onTap: () {
-                          controller.addToWishlist(
-                            int.parse(bills.id.toString()),
+                          controller.toggleWishlistByBillId(
+                            int.parse(bills.id ?? "0"),
                           );
                         },
                         child: Icon(

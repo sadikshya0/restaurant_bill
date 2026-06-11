@@ -4,7 +4,6 @@ import 'package:restaurant_bill/utils/colors.dart';
 import 'package:restaurant_bill/utils/custom_text_styles.dart';
 import 'package:restaurant_bill/utils/image_path.dart';
 import 'package:restaurant_bill/views/auth/register_screen.dart';
-import 'package:restaurant_bill/views/auth/successful_login_screen.dart';
 import 'package:restaurant_bill/widgets/custom/elevated_button.dart';
 import 'package:pinput/pinput.dart';
 
