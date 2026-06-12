@@ -8,7 +8,7 @@ class Notification {
   String? message;
   String? type;
   bool? isRead;
-  Null? readAt;
+  String? readAt;
   String? createdAt;
 
   Notification({

@@ -31,106 +31,184 @@ class NotificationScreen extends StatelessWidget {
       ),
 
       body: Obx(() {
-        final notifications = controller.notifications;
+        if (controller.isLoading.value) {
+          return Center(child: CircularProgressIndicator());
+        }
 
-        return notifications.isEmpty
-            ? const Center(child: Text("No notifications"))
-            : SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Column(
+        final notifications = controller.filteredNotifications;
+        return Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            children: [
+              /// SEARCH
+              CustomTextField(
+                hint: "Search",
+                textInputAction: TextInputAction.done,
+                textInputType: TextInputType.text,
+                preIconPath: Icons.search,
+                fillColor: AppColors.lGrey,
+                border: AppColors.lGrey,
+              ),
+
+              SizedBox(height: 10),
+
+              Row(
+                children: [
+                  Obx(
+                    () => Wrap(
+                      spacing: 8,
+                      children: [
+                        GestureDetector(
+                          onTap: () => controller.changeTab(0),
+                          child: _buildTab(
+                            "All",
+                            controller.allCount,
+                            controller.selectedTab.value == 0,
+                          ),
+                        ),
+
+                        GestureDetector(
+                          onTap: () => controller.changeTab(1),
+                          child: _buildTab(
+                            "Unread",
+                            controller.unreadCount,
+                            controller.selectedTab.value == 1,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      /// SEARCH
-                      CustomTextField(
-                        hint: "Search",
-                        textInputAction: TextInputAction.done,
-                        textInputType: TextInputType.text,
-                        preIconPath: Icons.search,
-                        fillColor: AppColors.lGrey,
-                        border: AppColors.lGrey,
+                      TextButton(
+                        onPressed: controller.markAllAsRead,
+                        child: Text(
+                          "Mark All as Read",
+                          style: CustomTextStyles.f12W600(
+                            color: AppColors.primaryColor,
+                          ),
+                        ),
                       ),
 
-                      const SizedBox(height: 10),
-
-                      /// COUNTERS
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              _buildTab("All", controller.allCount),
-                              const SizedBox(width: 8),
-                              _buildTab("Unread", controller.unreadCount),
-                            ],
-                          ),
-
-                          TextButton(
-                            onPressed: controller.markAllAsRead,
-                            child: Text(
-                              "Mark all as read",
-                              style: TextStyle(color: AppColors.primaryColor),
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      const SizedBox(height: 20),
-
-                      /// LIST
-                      ListView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: notifications.length,
-                        itemBuilder: (context, index) {
-                          final n = notifications[index];
-
-                          return Column(
-                            children: [
-                              NotificationTile(
-                                type: n.type,
-                                title: n.title ?? "",
-                                description: n.message ?? "",
-                                time: n.createdAt ?? "",
-                                showDot: !(n.isRead ?? false),
-                                onTap: () {},
-                              ),
-                              Divider(
-                                color: AppColors.secondaryTextColor.withOpacity(
-                                  0.5,
+                      IconButton(
+                        onPressed: () {
+                          Get.dialog(
+                            AlertDialog(
+                              title: Text(
+                                "Delete all notifications?",
+                                style: CustomTextStyles.f14W600(
+                                  color: AppColors.textColor,
                                 ),
                               ),
-                            ],
+                              content: Text(
+                                "This action will permanently remove all notifications.",
+                                style: CustomTextStyles.f14W400(
+                                  color: AppColors.textColor,
+                                ),
+                              ),
+                              actions: [
+                                TextButton(
+                                  onPressed: () => Get.back(),
+                                  child: Text(
+                                    "Cancel",
+                                    style: CustomTextStyles.f12W600(
+                                      color: AppColors.primaryColor,
+                                    ),
+                                  ),
+                                ),
+                                ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.red,
+                                  ),
+                                  onPressed: () {
+                                    Get.back();
+                                    controller.deleteAllNotifications();
+                                  },
+                                  child: Text(
+                                    "Delete",
+                                    style: CustomTextStyles.f12W600(
+                                      color: AppColors.primaryColor,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           );
                         },
+                        icon: Icon(Icons.delete_sweep, color: Colors.red),
                       ),
                     ],
                   ),
+                ],
+              ),
+
+              SizedBox(height: 20),
+
+              Expanded(
+                child: ListView.builder(
+                  itemCount: notifications.length,
+                  itemBuilder: (context, index) {
+                    final n = notifications[index];
+
+                    return Column(
+                      children: [
+                        NotificationTile(
+                          type: n.type,
+                          title: n.title ?? "",
+                          description: n.message ?? "",
+                          time: n.createdAt ?? "",
+                          showDot: !(n.isRead ?? false),
+                          onTap: () => controller.markAsRead(n.id.toString()),
+                          trailing: IconButton(
+                            icon: Icon(Icons.delete, color: Colors.red),
+                            onPressed: () =>
+                                controller.deleteNotification(n.id.toString()),
+                          ),
+                        ),
+                        Divider(
+                          color: AppColors.secondaryTextColor.withOpacity(0.5),
+                        ),
+                      ],
+                    );
+                  },
                 ),
-              );
+              ),
+            ],
+          ),
+        );
       }),
     );
   }
 
-  Widget _buildTab(String title, int count) {
+  Widget _buildTab(String title, int count, bool isActive) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        color: AppColors.primaryColor.withOpacity(0.2),
+        color: isActive
+            ? AppColors.primaryColor
+            : AppColors.primaryColor.withOpacity(0.2),
       ),
       child: Row(
         children: [
-          Text(title),
-          const SizedBox(width: 5),
+          Text(
+            title,
+            style: TextStyle(color: isActive ? Colors.white : Colors.black),
+          ),
+          SizedBox(width: 5),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 8),
             decoration: BoxDecoration(
-              color: AppColors.primaryColor,
+              color: isActive ? Colors.white : AppColors.primaryColor,
               borderRadius: BorderRadius.circular(20),
             ),
             child: Text(
               count.toString(),
-              style: const TextStyle(color: Colors.white),
+              style: TextStyle(
+                color: isActive ? AppColors.primaryColor : Colors.white,
+              ),
             ),
           ),
         ],

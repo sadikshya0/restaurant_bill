@@ -10,7 +10,7 @@ class NotificationTile extends StatelessWidget {
   final String time;
   final bool showDot;
   final VoidCallback? onTap;
-
+  final Widget? trailing;
   const NotificationTile({
     super.key,
     required this.type,
@@ -19,6 +19,7 @@ class NotificationTile extends StatelessWidget {
     required this.time,
     this.showDot = true,
     this.onTap,
+    this.trailing,
   });
 
   NotificationIcon _getNotificationIcon(String? type) {
@@ -106,6 +107,7 @@ class NotificationTile extends StatelessWidget {
                   color: AppColors.secondaryTextColor,
                 ),
               ),
+              if (trailing != null) ...[const SizedBox(height: 6), trailing!],
             ],
           ),
         ],
