@@ -72,11 +72,15 @@ class RecentBillsWidget extends StatelessWidget {
                   style: CustomTextStyles.f14W600(color: AppColors.textColor),
                 ),
                 const SizedBox(height: 3),
-                Text(
-                  bills.billDate ?? "",
-                  style: CustomTextStyles.f12W400(
-                    color: AppColors.secondaryTextColor,
-                  ),
+                Row(
+                  children: [
+                    Text(
+                      bills.billDate ?? "",
+                      style: CustomTextStyles.f12W400(
+                        color: AppColors.secondaryTextColor,
+                      ),
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 6),
 

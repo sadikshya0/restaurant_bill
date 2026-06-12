@@ -3,12 +3,12 @@ import 'dart:developer';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:restaurant_bill/controller/core_controller.dart';
-import 'package:restaurant_bill/model/bills.dart';
+import 'package:restaurant_bill/model/notification.dart';
 import 'package:restaurant_bill/utils/api.dart';
 
-class GetbillsRepo {
-  static Future<void> billsRepo({
-    required Function(List<Bills> bills) onSuccess,
+class GetNotificationRepo {
+  static Future<void> getNotificationRepo({
+    required Function(List<Notification> notification) onSuccess,
     required Function(String message) onError,
   }) async {
     try {
@@ -24,7 +24,7 @@ class GetbillsRepo {
       };
 
       log("HEADERS => $headers");
-      var url = Uri.parse(Api.billsUrl);
+      var url = Uri.parse(Api.notificationUrl);
 
       final response = await http.get(url, headers: headers);
 
@@ -38,8 +38,8 @@ class GetbillsRepo {
         final rawList = data['data'];
 
         if (rawList != null && rawList is List) {
-          final bills = billsFromJson(rawList);
-          onSuccess(bills);
+          final notification = notificationFromJson(rawList);
+          onSuccess(notification);
         } else {
           onSuccess([]);
         }

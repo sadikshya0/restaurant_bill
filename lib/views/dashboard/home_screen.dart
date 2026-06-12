@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:restaurant_bill/controller/core_controller.dart';
 import 'package:restaurant_bill/controller/dashboard/billing_screen_controller.dart';
 import 'package:restaurant_bill/controller/dashboard/home_screen_controller.dart';
+import 'package:restaurant_bill/controller/dashboard/notification_controller.dart';
 import 'package:restaurant_bill/utils/colors.dart';
 import 'package:restaurant_bill/utils/custom_text_styles.dart';
 import 'package:restaurant_bill/utils/image_path.dart';
@@ -50,21 +51,54 @@ class HomeScreen extends StatelessWidget {
           ],
         ),
         actions: [
-          InkWell(
-            onTap: () {
-              Get.offAll(() => NotificationScreen());
-            },
-            child: Container(
-              height: 30,
-              width: 30,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: AppColors.primaryColor,
-                border: Border.all(color: AppColors.lGrey, width: 1),
+          Obx(() {
+            final controller = Get.put(NotificationController());
+
+            return InkWell(
+              onTap: () {
+                Get.to(() => NotificationScreen());
+              },
+              child: Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  Container(
+                    height: 30,
+                    width: 30,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: AppColors.whiteColor,
+                      border: Border.all(color: AppColors.lGrey, width: 1),
+                    ),
+                    child: Icon(
+                      Icons.notifications_outlined,
+                      color: AppColors.secondaryTextColor,
+                      size: 20,
+                    ),
+                  ),
+
+                  if (controller.unreadCount > 0)
+                    Positioned(
+                      right: -2,
+                      top: -2,
+                      child: Container(
+                        padding: const EdgeInsets.all(4),
+                        decoration: const BoxDecoration(
+                          color: Colors.red,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Text(
+                          controller.unreadCount.toString(),
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 10,
+                          ),
+                        ),
+                      ),
+                    ),
+                ],
               ),
-              child: SvgPicture.asset(ImagePath.notification),
-            ),
-          ),
+            );
+          }),
 
           SizedBox(width: 12),
 

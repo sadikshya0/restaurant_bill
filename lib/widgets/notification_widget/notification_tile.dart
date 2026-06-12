@@ -1,34 +1,52 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:restaurant_bill/utils/colors.dart';
 import 'package:restaurant_bill/utils/custom_text_styles.dart';
+import 'package:restaurant_bill/widgets/notification_widget/notification_icon.dart';
 
 class NotificationTile extends StatelessWidget {
-  final String iconPath;
+  final String? type;
   final String title;
   final String description;
   final String time;
-  final Color iconBgColor;
   final bool showDot;
   final VoidCallback? onTap;
 
   const NotificationTile({
     super.key,
-    required this.iconPath,
+    required this.type,
     required this.title,
     required this.description,
     required this.time,
-    required this.iconBgColor,
     this.showDot = true,
     this.onTap,
   });
 
+  NotificationIcon _getNotificationIcon(String? type) {
+    switch (type) {
+      case "offer":
+        return NotificationIcon(icon: Icons.local_offer, color: Colors.orange);
+
+      case "loyalty":
+        return NotificationIcon(icon: Icons.star, color: Colors.amber);
+
+      case "money":
+        return NotificationIcon(icon: Icons.attach_money, color: Colors.green);
+
+      case "reminder":
+        return NotificationIcon(icon: Icons.alarm, color: Colors.blue);
+
+      default:
+        return NotificationIcon(icon: Icons.notifications, color: Colors.grey);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final iconData = _getNotificationIcon(type);
+
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(12),
-
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -38,16 +56,14 @@ class NotificationTile extends StatelessWidget {
             width: 40,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: iconBgColor,
+              color: iconData.color.withOpacity(0.15),
             ),
-            child: Center(
-              child: SvgPicture.asset(iconPath, height: 25, width: 25),
-            ),
+            child: Icon(iconData.icon, color: iconData.color, size: 22),
           ),
 
           const SizedBox(width: 12),
 
-          /// TITLE + DESCRIPTION
+          /// CONTENT
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -56,9 +72,7 @@ class NotificationTile extends StatelessWidget {
                   title,
                   style: CustomTextStyles.f12W600(color: AppColors.textColor),
                 ),
-
                 const SizedBox(height: 4),
-
                 Text(
                   description,
                   style: CustomTextStyles.f12W400(
@@ -71,11 +85,18 @@ class NotificationTile extends StatelessWidget {
 
           const SizedBox(width: 10),
 
-          /// TIME
+          /// TIME + DOT
           Column(
             children: [
               if (showDot)
-                Icon(Icons.circle, color: AppColors.primaryColor, size: 10),
+                Container(
+                  height: 8,
+                  width: 8,
+                  decoration: BoxDecoration(
+                    color: Colors.red,
+                    shape: BoxShape.circle,
+                  ),
+                ),
 
               const SizedBox(height: 4),
 

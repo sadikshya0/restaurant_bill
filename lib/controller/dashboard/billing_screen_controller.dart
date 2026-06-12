@@ -7,6 +7,9 @@ class BillingScreenController extends GetxController {
 
   RxList<Bills> bills = <Bills>[].obs;
   var isLoading = true.obs;
+  Future<void> fetchBills() async {
+    // call API and update list
+  }
 
   @override
   void onInit() {

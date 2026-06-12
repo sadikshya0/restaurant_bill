@@ -7,5 +7,8 @@ class Api {
   static const String billsUrl = "$baseUrl/get_bills.php";
   static const String wishlistUrl = "$baseUrl/get_wishlist.php";
   static const String addWishlistUrl = "$baseUrl/add_wishlist.php";
+  static const String addBillsUrl = "$baseUrl/add_bill.php";
+
   static const String deleteUrl = "$baseUrl/delete_wishlist.php";
+  static const String notificationUrl = "$baseUrl/get_notifications.php";
 }
