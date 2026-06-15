@@ -35,4 +35,15 @@ class StorageHelper {
       return null;
     }
   }
+
+  static Future<void> saveUser(Users user) async {
+    try {
+      final box = GetStorage();
+
+      await box.write(StorageKeys.USER, jsonEncode(user.toJson()));
+    } catch (e, s) {
+      log(e.toString());
+      log(s.toString());
+    }
+  }
 }

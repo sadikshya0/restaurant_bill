@@ -1,10 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:restaurant_bill/controller/core_controller.dart';
 import 'package:restaurant_bill/controller/dashboard/edit_profile_controller.dart';
 import 'package:restaurant_bill/utils/colors.dart';
 import 'package:restaurant_bill/utils/custom_text_styles.dart';
 import 'package:restaurant_bill/utils/image_path.dart';
-import 'package:restaurant_bill/views/dashboard/dash_screen.dart';
 import 'package:restaurant_bill/views/dashboard/profile_screen.dart';
 import 'package:restaurant_bill/widgets/custom/custom_dropdown_field.dart';
 import 'package:restaurant_bill/widgets/custom/custom_textfield.dart';
@@ -41,11 +43,14 @@ class EditProfileScreen extends StatelessWidget {
                 Center(
                   child: Stack(
                     children: [
-                      Obx(
-                        () => Container(
+                      Obx(() {
+                        final user =
+                            Get.find<CoreController>().currentUser.value;
+
+                        return Container(
                           height: 120,
                           width: 120,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             color: AppColors.whiteColor,
                             shape: BoxShape.circle,
                           ),
@@ -53,6 +58,12 @@ class EditProfileScreen extends StatelessWidget {
                             child: controller.selectedImage.value != null
                                 ? Image.file(
                                     controller.selectedImage.value!,
+                                    fit: BoxFit.cover,
+                                  )
+                                : (user?.profileImage != null &&
+                                      user!.profileImage!.isNotEmpty)
+                                ? Image.file(
+                                    File(user.profileImage!),
                                     fit: BoxFit.cover,
                                   )
                                 : Padding(
@@ -64,8 +75,8 @@ class EditProfileScreen extends StatelessWidget {
                                     ),
                                   ),
                           ),
-                        ),
-                      ),
+                        );
+                      }),
                       Positioned(
                         bottom: 0,
                         right: 8,
@@ -142,28 +153,19 @@ class EditProfileScreen extends StatelessWidget {
                 SizedBox(height: 40),
 
                 CustomTextField(
-                  hint: "First Name",
+                  hint: "Full Name",
                   textInputAction: TextInputAction.next,
                   textInputType: TextInputType.text,
+                  controller: controller.fullNameController,
                 ),
+                SizedBox(height: 20),
 
-                SizedBox(height: 20),
-                CustomTextField(
-                  hint: "Last Name",
-                  textInputAction: TextInputAction.next,
-                  textInputType: TextInputType.text,
-                ),
-                SizedBox(height: 20),
-                CustomTextField(
-                  hint: "Username",
-                  textInputAction: TextInputAction.next,
-                  textInputType: TextInputType.text,
-                ),
-                SizedBox(height: 20),
                 CustomTextField(
                   hint: "Email",
                   textInputAction: TextInputAction.next,
                   textInputType: TextInputType.text,
+                  readOnly: true,
+                  controller: controller.emailController,
                 ),
                 SizedBox(height: 20),
 
@@ -171,14 +173,8 @@ class EditProfileScreen extends StatelessWidget {
                   hint: "Phone number",
                   textInputAction: TextInputAction.next,
                   textInputType: TextInputType.number,
+                  controller: controller.phoneController,
                 ),
-                SizedBox(height: 20),
-                CustomTextField(
-                  hint: "Date of Birth",
-                  textInputAction: TextInputAction.next,
-                  textInputType: TextInputType.datetime,
-                ),
-
                 SizedBox(height: 20),
 
                 Obx(
@@ -195,23 +191,31 @@ class EditProfileScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 40),
-                InkWell(
-                  onTap: () {
-                    Get.offAll(() => DashScreen());
-                  },
-                  child: Container(
-                    height: 45,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: AppColors.primaryColor,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Center(
-                      child: Text(
-                        "Save",
-                        style: CustomTextStyles.f14W600(
-                          color: AppColors.whiteColor,
-                        ),
+                Obx(
+                  () => InkWell(
+                    onTap: controller.isLoading.value
+                        ? null
+                        : () {
+                            controller.updateProfile();
+                          },
+                    child: Container(
+                      height: 45,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: AppColors.primaryColor,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Center(
+                        child: controller.isLoading.value
+                            ? const CircularProgressIndicator(
+                                color: Colors.white,
+                              )
+                            : Text(
+                                "Save",
+                                style: CustomTextStyles.f14W600(
+                                  color: AppColors.whiteColor,
+                                ),
+                              ),
                       ),
                     ),
                   ),

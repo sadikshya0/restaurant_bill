@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -106,23 +108,19 @@ class HomeScreen extends StatelessWidget {
             onTap: () {
               Get.offAll(() => ProfileScreen());
             },
-            child: Container(
-              height: 40,
-              width: 40,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: AppColors.secondaryColor.withOpacity(0.5),
-                border: Border.all(color: AppColors.lGrey, width: 2),
-              ),
-              child: Center(
-                child: Text(
-                  "JD",
-                  style: CustomTextStyles.f12W600(
-                    color: AppColors.primaryColor,
-                  ),
-                ),
-              ),
-            ),
+            child: Obx(() {
+              final user = coreController.currentUser.value;
+
+              if (user?.profileImage != null &&
+                  user!.profileImage!.isNotEmpty) {
+                return CircleAvatar(
+                  radius: 15,
+                  backgroundImage: FileImage(File(user.profileImage!)),
+                );
+              }
+
+              return const CircleAvatar(radius: 25, child: Icon(Icons.person));
+            }),
           ),
           SizedBox(width: 16),
         ],
