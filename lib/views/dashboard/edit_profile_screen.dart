@@ -55,13 +55,9 @@ class EditProfileScreen extends StatelessWidget {
                             shape: BoxShape.circle,
                           ),
                           child: ClipOval(
-                            child: controller.selectedImage.value != null
-                                ? Image.file(
-                                    controller.selectedImage.value!,
-                                    fit: BoxFit.cover,
-                                  )
-                                : (user?.profileImage != null &&
-                                      user!.profileImage!.isNotEmpty)
+                            child:
+                                (user?.profileImage != null &&
+                                    user!.profileImage!.isNotEmpty)
                                 ? Image.file(
                                     File(user.profileImage!),
                                     fit: BoxFit.cover,

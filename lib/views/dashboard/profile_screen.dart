@@ -271,36 +271,52 @@ class ProfileScreen extends StatelessWidget {
                   ),
                 ),
 
-                const SizedBox(height: 40),
+                SizedBox(height: 40),
 
                 InkWell(
                   onTap: () {
-                    coreController.logOut();
-                  },
+                    Get.dialog(
+                      AlertDialog(
+                        title: Text("Logout"),
+                        content: Text("Do you want to log out?"),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Get.back();
+                            },
+                            child: Text("Cancel"),
+                          ),
 
+                          TextButton(
+                            onPressed: () {
+                              Get.back();
+
+                              final coreController = Get.find<CoreController>();
+                              coreController.logOutUser();
+                            },
+                            child: Text(
+                              "Logout",
+                              style: TextStyle(color: Colors.red),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
                   child: Container(
                     height: 50,
                     width: double.infinity,
-
                     decoration: BoxDecoration(
-                      border: Border.all(color: Colors.red, width: 1),
-
-                      color: AppColors.whiteColor,
+                      border: Border.all(color: Colors.red),
                       borderRadius: BorderRadius.circular(15),
+                      color: Colors.white,
                     ),
-
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-
                       children: [
-                        const Icon(Icons.logout, color: Colors.red, size: 24),
-
-                        const SizedBox(width: 2),
-
-                        Text(
-                          "Logout",
-                          style: CustomTextStyles.f12W600(color: Colors.red),
-                        ),
+                        Icon(Icons.logout, color: Colors.red),
+                        SizedBox(width: 6),
+                        Text("Logout", style: TextStyle(color: Colors.red)),
                       ],
                     ),
                   ),
