@@ -161,19 +161,64 @@ class PrivacyScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 10),
                 PrivacyCard(
-                  title: "Delete  Account",
+                  title: "Delete Account",
                   description: "Permanently delete your account.",
                   trailing: Container(
-                    height: 28,
+                    height: 35,
                     width: 95,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
                       border: Border.all(color: AppColors.textColor),
                       color: Colors.redAccent.withOpacity(0.9),
                     ),
-                    child: Center(
+                    child: TextButton(
+                      onPressed: () {
+                        Get.dialog(
+                          AlertDialog(
+                            title: Text(
+                              "Delete Account?",
+                              style: CustomTextStyles.f14W600(
+                                color: AppColors.textColor,
+                              ),
+                            ),
+                            content: Text(
+                              "This action is permanent and will remove your account and all associated data.",
+                              style: CustomTextStyles.f14W400(
+                                color: AppColors.textColor,
+                              ),
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed: () => Get.back(),
+                                child: Text(
+                                  "Cancel",
+                                  style: CustomTextStyles.f12W600(
+                                    color: AppColors.primaryColor,
+                                  ),
+                                ),
+                              ),
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.red,
+                                ),
+                                onPressed: () {
+                                  Get.back();
+                                  controller
+                                      .deleteAccount(); // Your account delete method
+                                },
+                                child: Text(
+                                  "Delete",
+                                  style: CustomTextStyles.f12W600(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
                       child: Text(
-                        "Delete Account",
+                        "Delete",
                         style: CustomTextStyles.f12W400(
                           color: AppColors.textColor,
                         ),

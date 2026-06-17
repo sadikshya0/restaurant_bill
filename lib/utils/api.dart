@@ -19,4 +19,5 @@ class Api {
       "$baseUrl/delete_all_notification.php";
   static const String updateUrl = "$baseUrl/update_profile.php";
   static const String logoutUrl = "$baseUrl/logout.php";
+  static const String deleteAccountUrl = "$baseUrl/delete_account.php";
 }
