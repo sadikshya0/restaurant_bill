@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:camera/camera.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -27,7 +26,10 @@ class QrScreenController extends GetxController {
       final permission = await Permission.camera.request();
 
       if (!permission.isGranted) {
-        Get.snackbar("Permission", "Camera permission denied");
+        Get.snackbar(
+          "Permission Denied",
+          "Camera permission is required to scan QR or capture bills.",
+        );
         return;
       }
 
@@ -42,8 +44,13 @@ class QrScreenController extends GetxController {
       await cameraController!.initialize();
 
       isInitialized.value = true;
+
+      Get.snackbar("Success", "Camera initialized successfully");
     } catch (e) {
-      Get.snackbar("Error", "Camera initialization failed");
+      Get.snackbar(
+        "Error",
+        "Failed to initialize camera. Please restart the app.",
+      );
     } finally {
       isLoading.value = false;
     }
@@ -52,15 +59,20 @@ class QrScreenController extends GetxController {
   /// Capture image from camera
   Future<void> captureImage() async {
     try {
-      if (cameraController == null) return;
+      if (cameraController == null) {
+        Get.snackbar("Error", "Camera not ready");
+        return;
+      }
 
       isLoading.value = true;
 
       final XFile file = await cameraController!.takePicture();
 
       capturedImage.value = File(file.path);
+
+      Get.snackbar("Success", "Image captured successfully");
     } catch (e) {
-      Get.snackbar("Error", "Capture failed");
+      Get.snackbar("Error", "Failed to capture image. Try again.");
     } finally {
       isLoading.value = false;
     }
@@ -78,15 +90,19 @@ class QrScreenController extends GetxController {
 
       if (image != null) {
         capturedImage.value = File(image.path);
+
+        Get.snackbar("Success", "Image selected from gallery");
+      } else {
+        Get.snackbar("Info", "No image selected");
       }
     } catch (e) {
-      Get.snackbar("Error", "Failed to pick image");
+      Get.snackbar("Error", "Failed to pick image from gallery");
     } finally {
       isLoading.value = false;
     }
   }
 
-  /// Flash
+  /// Flash toggle
   Future<void> toggleFlash() async {
     if (cameraController == null) return;
 
@@ -95,38 +111,51 @@ class QrScreenController extends GetxController {
     await cameraController!.setFlashMode(
       flashOn.value ? FlashMode.torch : FlashMode.off,
     );
+
+    Get.snackbar(
+      "Flash",
+      flashOn.value ? "Flash turned ON" : "Flash turned OFF",
+    );
   }
 
   /// Upload bill
   Future<void> uploadBill() async {
-    if (capturedImage.value == null) return;
+    if (capturedImage.value == null) {
+      Get.snackbar("Warning", "Please select or capture an image first");
+      return;
+    }
 
-    isLoading.value = true;
+    try {
+      isLoading.value = true;
 
-    await AddBillsRepo.addBillsRepo(
-      billImage: capturedImage.value!,
-      onSuccess: (message) {
-        Get.snackbar("Success", message);
+      await AddBillsRepo.addBillsRepo(
+        billImage: capturedImage.value!,
+        onSuccess: (message) {
+          Get.snackbar("Success", message);
 
-        if (Get.isRegistered<BillingScreenController>()) {
-          Get.find<BillingScreenController>().fetchBills();
-        }
+          if (Get.isRegistered<BillingScreenController>()) {
+            Get.find<BillingScreenController>().fetchBills();
+          }
 
-        clearImage();
+          clearImage();
 
-        Get.back();
-      },
-      onError: (message) {
-        Get.snackbar("Error", message);
-      },
-    );
-
-    isLoading.value = false;
+          Get.back();
+        },
+        onError: (message) {
+          Get.snackbar("Error", message);
+        },
+      );
+    } catch (e) {
+      Get.snackbar("Error", "Something went wrong while uploading bill");
+    } finally {
+      isLoading.value = false;
+    }
   }
 
-  /// Clear image
   void clearImage() {
     capturedImage.value = null;
+
+    Get.snackbar("Retake", "You can capture or select a new image");
   }
 
   @override

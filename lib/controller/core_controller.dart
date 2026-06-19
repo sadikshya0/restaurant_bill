@@ -1,6 +1,5 @@
 import 'dart:developer';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:restaurant_bill/model/user.dart';
 import 'package:restaurant_bill/repo/logout_repo.dart';
 import 'package:restaurant_bill/utils/storage_keys.dart';
@@ -8,54 +7,62 @@ import 'package:restaurant_bill/views/auth/login_screen.dart';
 
 class CoreController extends GetxController {
   Rx<Users?> currentUser = Rxn<Users>();
-  Rx<String> userToken = "".obs;
+  RxString userToken = "".obs;
 
   @override
-  void onInit() async {
-    log("dsfsdfsdfdsfdsfsdf");
-    await loadCurrentUser();
+  void onInit() {
     super.onInit();
+    loadCurrentUser();
   }
 
-  Future<void> loadCurrentUser() async {
+  /// LOAD USER FROM STORAGE
+  void loadCurrentUser() {
     currentUser.value = StorageHelper.getUser();
-    userToken.value = StorageHelper.getToken();
-    log("current email---- ${currentUser.value?.email}--");
-    log("current token--- ${currentUser.value?.token}--");
+    userToken.value = StorageHelper.getToken() ?? "";
+
+    log("User Email: ${currentUser.value?.email}");
+    log("Token: ${userToken.value}");
   }
 
-  bool isUserLoggendIn() {
-    log("dsfsdfsdfdsfdsfsdfsadas jksdhk");
-
+  /// CHECK LOGIN STATUS
+  bool isUserLoggedIn() {
     return currentUser.value != null;
   }
 
-  void logOut() async {
-    final box = GetStorage();
-    await box.write(StorageKeys.USER, null);
-    Get.offAll(() => LoginScreen());
-  }
-
+  /// 🔥 SINGLE CLEAN LOGOUT FLOW
   Future<void> logOutUser() async {
     final user = currentUser.value;
 
-    if (user == null) return;
+    if (user == null) {
+      await StorageHelper.clearAll();
+      Get.offAll(() => LoginScreen());
+      return;
+    }
 
     await LogoutRepo.logoutRepo(
-      email: user.email ?? "",
-      password: user.password ?? "",
-      onSuccess: (msg) {
+      onSuccess: (msg) async {
+        await StorageHelper.clearAll();
+
         currentUser.value = null;
+        userToken.value = "";
 
         if (Get.isDialogOpen == true) {
           Get.back();
         }
 
-        Future.delayed(const Duration(milliseconds: 100), () {
-          Get.offAll(() => LoginScreen());
-        });
+        Get.offAll(() => LoginScreen());
+
+        Get.snackbar("Success", msg, snackPosition: SnackPosition.BOTTOM);
       },
-      onError: (msg) {
+      onError: (msg) async {
+        // fallback: still logout locally (important for security)
+        await StorageHelper.clearAll();
+
+        currentUser.value = null;
+        userToken.value = "";
+
+        Get.offAll(() => LoginScreen());
+
         Get.snackbar("Error", msg, snackPosition: SnackPosition.BOTTOM);
       },
     );

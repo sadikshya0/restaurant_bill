@@ -23,30 +23,32 @@ class SuccessfulLoginScreen extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(left: 16, right: 16, top: 100),
-          child: Column(
-            children: [
-              Image.asset(ImagePath.security),
-              SizedBox(height: 20),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Image.asset(ImagePath.security),
+                SizedBox(height: 20),
 
-              Text(
-                "Login Successful",
-                style: CustomTextStyles.f20W600(color: AppColors.textColor),
-              ),
-              SizedBox(height: 10),
-              Text(
-                "Welcome to Bill Scanner App",
-                style: CustomTextStyles.f14W400(color: AppColors.textColor),
-              ),
+                Text(
+                  "Login Successful",
+                  style: CustomTextStyles.f20W600(color: AppColors.textColor),
+                ),
+                SizedBox(height: 10),
+                Text(
+                  "Welcome to Bill Scanner App",
+                  style: CustomTextStyles.f14W400(color: AppColors.textColor),
+                ),
 
-              SizedBox(height: 100),
+                SizedBox(height: 100),
 
-              CustomElevatedButton(
-                title: "Home",
-                onTap: () {
-                  Get.offAll(() => DashScreen());
-                },
-              ),
-            ],
+                CustomElevatedButton(
+                  title: "Home",
+                  onTap: () {
+                    Get.offAll(() => DashScreen());
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),

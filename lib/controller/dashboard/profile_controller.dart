@@ -2,6 +2,9 @@ import 'dart:io';
 
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:restaurant_bill/controller/core_controller.dart';
+import 'package:restaurant_bill/utils/storage_keys.dart';
+import 'package:restaurant_bill/views/auth/login_screen.dart';
 
 class ProfileController extends GetxController {
   /// User Info
@@ -26,16 +29,21 @@ class ProfileController extends GetxController {
     final XFile? image = await picker.pickImage(source: ImageSource.camera);
 
     if (image != null) {
-      selectedImage.value = File(image.path);
+      final file = File(image.path);
+      selectedImage.value = file;
+
+      _updateGlobalProfileImage(file);
     }
   }
 
-  /// Pick Image From Gallery
   Future<void> pickFromGallery() async {
     final XFile? image = await picker.pickImage(source: ImageSource.gallery);
 
     if (image != null) {
-      selectedImage.value = File(image.path);
+      final file = File(image.path);
+      selectedImage.value = file;
+
+      _updateGlobalProfileImage(file);
     }
   }
 
@@ -58,6 +66,25 @@ class ProfileController extends GetxController {
 
   /// Logout
   void logout() {
-    Get.offAllNamed('/login');
+    final core = Get.find<CoreController>();
+    core.currentUser.value = null;
+
+    selectedImage.value = null;
+    Get.offAll(() => LoginScreen());
+  }
+
+  void _updateGlobalProfileImage(File file) {
+    final core = Get.find<CoreController>();
+
+    core.currentUser.update((user) {
+      if (user != null) {
+        user.profileImage = file.path;
+      }
+    });
+
+    core.currentUser.refresh();
+
+    /// OPTIONAL: persist locally
+    StorageHelper.saveUser(core.currentUser.value!);
   }
 }

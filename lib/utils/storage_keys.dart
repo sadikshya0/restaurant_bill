@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:developer';
-
 import 'package:get_storage/get_storage.dart';
 import 'package:restaurant_bill/model/user.dart';
 
@@ -10,11 +9,12 @@ class StorageKeys {
 }
 
 class StorageHelper {
-  static getToken() {
+  static final GetStorage _box = GetStorage();
+
+  /// GET TOKEN
+  static String? getToken() {
     try {
-      final box = GetStorage();
-      String token = box.read(StorageKeys.ACCESS_TOKEN);
-      return token;
+      return _box.read(StorageKeys.ACCESS_TOKEN);
     } catch (e, s) {
       log(e.toString());
       log(s.toString());
@@ -22,25 +22,35 @@ class StorageHelper {
     }
   }
 
+  /// GET USER
   static Users? getUser() {
-    log("Fetching user");
     try {
-      final box = GetStorage();
-      Users user = Users.fromJson(json.decode(box.read(StorageKeys.USER)));
-      return user;
+      final data = _box.read(StorageKeys.USER);
+
+      if (data == null) return null;
+
+      return Users.fromJson(json.decode(data));
     } catch (e, s) {
       log(e.toString());
       log(s.toString());
-      log("Failed fetch user");
       return null;
     }
   }
 
+  /// SAVE USER
   static Future<void> saveUser(Users user) async {
     try {
-      final box = GetStorage();
+      await _box.write(StorageKeys.USER, jsonEncode(user.toJson()));
+    } catch (e, s) {
+      log(e.toString());
+      log(s.toString());
+    }
+  }
 
-      await box.write(StorageKeys.USER, jsonEncode(user.toJson()));
+  /// 🔥 CLEAR ALL DATA (THIS FIXES YOUR ERROR)
+  static Future<void> clearAll() async {
+    try {
+      await _box.erase();
     } catch (e, s) {
       log(e.toString());
       log(s.toString());

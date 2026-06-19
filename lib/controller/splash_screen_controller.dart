@@ -9,7 +9,7 @@ class SplashScreenController extends GetxController {
   void onInit() {
     super.onInit();
     Future.delayed(const Duration(seconds: 3), () {
-      if (c.isUserLoggendIn()) {
+      if (c.isUserLoggedIn()) {
         Get.offAll(() => DashScreen());
       } else {
         Get.offAll(() => LoginScreen());

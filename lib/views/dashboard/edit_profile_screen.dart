@@ -55,9 +55,13 @@ class EditProfileScreen extends StatelessWidget {
                             shape: BoxShape.circle,
                           ),
                           child: ClipOval(
-                            child:
-                                (user?.profileImage != null &&
-                                    user!.profileImage!.isNotEmpty)
+                            child: controller.selectedImage.value != null
+                                ? Image.file(
+                                    controller.selectedImage.value!,
+                                    fit: BoxFit.cover,
+                                  )
+                                : (user?.profileImage != null &&
+                                      user!.profileImage!.isNotEmpty)
                                 ? Image.file(
                                     File(user.profileImage!),
                                     fit: BoxFit.cover,
@@ -66,8 +70,7 @@ class EditProfileScreen extends StatelessWidget {
                                     padding: const EdgeInsets.all(8.0),
                                     child: Image.asset(
                                       ImagePath.profile,
-                                      height: 110,
-                                      width: 110,
+                                      fit: BoxFit.cover,
                                     ),
                                   ),
                           ),

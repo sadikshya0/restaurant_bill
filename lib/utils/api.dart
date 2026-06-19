@@ -20,4 +20,6 @@ class Api {
   static const String updateUrl = "$baseUrl/update_profile.php";
   static const String logoutUrl = "$baseUrl/logout.php";
   static const String deleteAccountUrl = "$baseUrl/delete_account.php";
+  static const String forgetPasswordUrl = "$baseUrl/forgot_password.php";
+  static const String resetPasswordUrl = "$baseUrl/reset_password.php";
 }

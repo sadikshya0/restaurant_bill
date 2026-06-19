@@ -5,6 +5,7 @@ import 'package:restaurant_bill/utils/colors.dart';
 import 'package:restaurant_bill/utils/custom_text_styles.dart';
 import 'package:restaurant_bill/utils/image_path.dart';
 import 'package:restaurant_bill/utils/validator.dart';
+import 'package:restaurant_bill/views/auth/forget_password_screen.dart';
 import 'package:restaurant_bill/views/auth/register_screen.dart';
 import 'package:restaurant_bill/widgets/custom/custom_password_textfield.dart';
 import 'package:restaurant_bill/widgets/custom/custom_textfield.dart';
@@ -25,7 +26,6 @@ class LoginScreen extends StatelessWidget {
               key: c.formKey,
 
               child: Column(
-                // mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Center(
@@ -106,7 +106,9 @@ class LoginScreen extends StatelessWidget {
                   Align(
                     alignment: AlignmentGeometry.topRight,
                     child: TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Get.to(() => ForgetPasswordScreen());
+                      },
                       child: Text(
                         "Forgot Password?",
                         style: CustomTextStyles.f16W600(
